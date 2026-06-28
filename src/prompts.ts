@@ -6,6 +6,11 @@ export const getProjectOptions = async () => {
     const projectName = await clack.text({
         message: 'What is your project name?',
         placeholder: 'my-app',
+        validate(value) {
+            if (!value || value.trim() === '') {
+                return 'Project name cannot be empty.'
+            }
+        }
     }) 
 
     if (clack.isCancel(projectName)) {

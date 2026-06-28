@@ -4,36 +4,47 @@ export const createPrismaPlugin = (options: ProjectOptions): Plugin => {
     const {projectName, useTypescript} = options
     const prismaConfig = `prisma.config.ts`
     const schemaContent = `generator client {
-    provider = "prisma-client-js"
-    output = "../generated/prisma"
+    provider = "prisma-client"
+    output   = "../generated/prisma"
     }
+
     datasource db {
     provider = "postgresql"
-    url      = env("DATABASE_URL")
+    }`  
+
+    const prismaConfigContent = `import path from 'path'
+  import { defineConfig } from 'prisma/config'
+
+  export default defineConfig({
+  earlyAccess: true,
+  schema: path.join('prisma', 'schema.prisma'),
+  migrate: {
+    async adapter() {
+      const { PrismaPg } = await import('@prisma/adapter-pg')
+      return new PrismaPg({ connectionString: process.env.DATABASE_URL })
     }
+  }
+})`
 
-    `
+    const prismaClientContent = useTypescript
+  ? `import { PrismaClient } from '../../generated/prisma'
+  import { PrismaPg } from '@prisma/adapter-pg'
 
-    const prismaConfigContent = `import path from "path"
-    import {defineConfig} from "prisma/config"
+  const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
+  const prisma = new PrismaClient({ adapter })
 
-    export default defineConfig({
-    earlyAccess: true,
-    schema: path.join('prisma', 'schema.prisma'),
-    })`
+  export default prisma`
+  : `const { PrismaClient } = require('../../generated/prisma')
+  const { PrismaPg } = require('@prisma/adapter-pg')
 
-    const prismaClientContent = useTypescript ? 
-    `import { PrismaClient } from "../generated/prisma"
-    const prisma = new PrismaClient()
-    export default prisma`
-    :
-    `const { PrismaClient } = require("../generated/prisma")
-    const prisma = new PrismaClient()
-    module.exports = prisma`
+  const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
+  const prisma = new PrismaClient({ adapter })
+
+  module.exports = prisma`  
 
     return {
             name: 'prisma',
-            dependencies: ['@prisma/client'],
+            dependencies: ['@prisma/client', '@prisma/adapter-pg', 'pg'],
             devDependencies: ['prisma'],
             files: [
                 {

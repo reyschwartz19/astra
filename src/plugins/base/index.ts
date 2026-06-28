@@ -13,6 +13,7 @@ app.use(express.json())
 
 app.get('/', (req,res) => {
 res.json({message: 'Hello from ${projectName}'})
+})
 
 app.listen(PORT, () => {
   console.log(\`Server running on port \${PORT}\`)
