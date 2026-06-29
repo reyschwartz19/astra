@@ -1,6 +1,6 @@
 {
   "name": "create-astra",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A CLI that scaffolds production-ready backend projects",
   "main": "dist/index.js",
   "bin": {
@@ -11,7 +11,14 @@
     "build": "tsc",
     "prepare": "npm run build"
   },
-  "keywords": ["cli", "scaffold", "express", "prisma", "typescript", "backend"],
+  "keywords": [
+    "cli",
+    "scaffold",
+    "express",
+    "prisma",
+    "typescript",
+    "backend"
+  ],
   "author": "Njong Remy",
   "license": "MIT",
   "files": [
@@ -21,7 +28,6 @@
   "dependencies": {
     "@clack/prompts": "^1.6.0",
     "execa": "^9.6.1"
-  
   },
   "devDependencies": {
     "@types/node": "^26.0.1",
