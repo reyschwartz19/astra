@@ -34,7 +34,7 @@ export const getProjectOptions = async () => {
      node: [
       { value: 'express', label: 'Express (JavaScript)' },
       { value: 'express-ts', label: 'Express (TypeScript)' },
-      { value: 'fastify', label: 'Fastify (coming soon)' },
+      
     ],
      python: [
       { value: 'fastapi', label: 'FastAPI' },

@@ -1,24 +1,31 @@
 {
-  "name": "astra",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node src/index.ts",
-    "build": "tsc"
+  "name": "create-astra",
+  "version": "0.1.0",
+  "description": "A CLI that scaffolds production-ready backend projects",
+  "main": "dist/index.js",
+  "bin": {
+    "create-astra": "dist/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "keywords": ["cli", "scaffold", "express", "prisma", "typescript", "backend"],
+  "author": "Njong Remy",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "type": "commonjs",
   "dependencies": {
     "@clack/prompts": "^1.6.0",
-    "execa": "^9.6.1",
-    "ts-node": "^10.9.2",
-    "typescript": "^6.0.3"
+    "execa": "^9.6.1"
+  
   },
   "devDependencies": {
-    "@types/node": "^26.0.1"
+    "@types/node": "^26.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
   }
 }
